@@ -1,1 +1,1 @@
-# ga-project4-commerce
+# STRIDES
