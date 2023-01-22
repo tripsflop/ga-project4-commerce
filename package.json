@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/tripsflop/ga-project4-commerce/issues"
   },
-  "homepage": "https://github.com/tripsflop/ga-project4-commerce#readme"
+  "homepage": "https://github.com/tripsflop/ga-project4-commerce#readme",
+  "dependencies": {
+    "crypto": "^1.0.1"
+  }
 }

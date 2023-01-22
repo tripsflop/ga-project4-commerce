@@ -5,6 +5,7 @@ const User = require("../models/user.js");
 const role = require("../helper/roles.js");
 const user = express.Router();
 const jwt = require("jsonwebtoken");
+const authorise = require("../middleware/auth.js");
 
 // user login
 user.post("/login", async (req, res) => {
@@ -19,16 +20,22 @@ user.post("/login", async (req, res) => {
     return res.status(401).json({ msg: "Invalid password" });
   }
 
-  const token = jwt.sign(
+  const accessToken = jwt.sign(
     { id: user, role: role.User },
-    process.env.JWT_SECRET,
+    process.env.JWT_TOKEN_SECRET,
     { expiresIn: "1h" }
   );
 
-  res.cookie("token", token, { httpOnly: true });
+  const refreshToken = jwt.sign(
+    { id: user, role: role.User },
+    process.env.REFRESH_TOKEN_SECRET
+  );
+
+  res.cookie("token", accessToken, { httpOnly: true });
+  res.cookie("refresh", refreshToken, { httpOnly: true });
 
   // redirect to explore page
-  return res.status(200);
+  return res.status(200).send({ msg: "Login Success" });
 });
 
 user.post(
@@ -71,29 +78,34 @@ user.post(
   }
 );
 
-user.get("/:id", param("id").isMongoId(), async (req, res) => {
-  const { id } = req.params;
-  const errors = validationResult(req);
-  if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+user.get(
+  "/:id",
+  param("id").isMongoId(),
+  authorise(role.User),
+  async (req, res) => {
+    const { id } = req.params;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    try {
+      let item = await User.findById(id);
+      const value = {
+        _id: item._id,
+        username: item.username,
+        name: item.name,
+        mobile: item.mobile,
+        email: item.email,
+        streetName: item.streetName,
+        unitNo: item.unitNo,
+        postalCode: item.postalCode,
+      };
+      res.json(value);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
   }
-  try {
-    let item = await User.findById(id);
-    const value = {
-      _id: item._id,
-      username: item.username,
-      name: item.name,
-      mobile: item.mobile,
-      email: item.email,
-      streetName: item.streetName,
-      unitNo: item.unitNo,
-      postalCode: item.postalCode,
-    };
-    res.json(value);
-  } catch (error) {
-    res.status(400).json({ error: error.message });
-  }
-});
+);
 
 user.get("/check/:id", async (req, res) => {
   const { id } = req.params;

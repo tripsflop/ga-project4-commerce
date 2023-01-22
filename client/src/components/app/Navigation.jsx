@@ -1,5 +1,6 @@
 import React from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Navigation = () => {
   const style = ({ isActive }) => ({
@@ -7,6 +8,8 @@ const Navigation = () => {
     paddingRight: "10px",
     fontWeight: isActive ? "bold" : "normal",
   });
+
+  const quantity = useSelector((state) => state.cart.quantity);
 
   return (
     <React.Fragment>
@@ -22,6 +25,9 @@ const Navigation = () => {
         </NavLink>
         <NavLink style={style} to="/profile">
           Profile
+        </NavLink>
+        <NavLink style={style} to="/cart">
+          {`Cart(${quantity})`}
         </NavLink>
       </nav>
       <main style={{ padding: "1rem 0" }}>

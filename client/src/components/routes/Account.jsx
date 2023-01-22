@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
@@ -12,6 +12,8 @@ const schema = yup.object().shape({
 
 function Account() {
   const [msg, setMsg] = useState("");
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -35,6 +37,7 @@ function Account() {
           setMsg(data.msg);
         }
       });
+    // .then(navigate("/profile"));
   };
 
   return (

@@ -11,6 +11,7 @@ const { db } = require("./models/user.js");
 const userController = require("./controllers/userController.js");
 const adminController = require("./controllers/adminController.js");
 const productController = require("./controllers/productController.js");
+const checkoutController = require("./controllers/checkoutController.js");
 
 const app = express();
 const PORT = process.env.PORT ?? 7000;
@@ -41,6 +42,7 @@ app.use(cookieParser());
 app.use("/api/user", userController);
 app.use("/api/admin", adminController);
 app.use("/api/product", productController);
+app.use("/api/checkout", checkoutController);
 
 app.get("/api/", (req, res) => {
   res.json({ message: "connection success!" });

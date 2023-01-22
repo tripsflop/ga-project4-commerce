@@ -7,6 +7,7 @@ import Profile from "../routes/Profile";
 import NotFound from "../misc/NotFound";
 import Product from "../product/Product";
 import Register from "../routes/Register";
+import Cart from "../routes/Cart";
 import { Route, Routes } from "react-router-dom";
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="account" element={<Account />} />
           <Route path="profile" element={<Profile />} />
           <Route path="register" element={<Register />} />
+          <Route path="cart" element={<Cart />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>
