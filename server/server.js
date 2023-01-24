@@ -33,6 +33,7 @@ db.on("connected", () => console.log("mongo connected: ", MONGO_URI));
 db.on("disconnected", () => console.log("mongo disconnected"));
 
 // middleware
+app.use("/api/checkout/webhook", express.raw({ type: "*/*" })); // prevent webhook signature from being modified
 app.use(express.json());
 app.use(morgan("dev"));
 app.use(express.static("../client/dist"));

@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 function Product() {
   const [product, setProduct] = useState([]);
   const [size, setSize] = useState("");
+  const [available, setAvailable] = useState("");
   const [quantity, setQuantity] = useState(1);
   const location = useLocation();
   const { from } = location.state;
@@ -25,12 +26,16 @@ function Product() {
     dispatch(addProduct({ ...product, quantity, size }));
   };
 
-  const handleSize = (e) => {
+  const handleClick = (e) => {
+    setQuantity(1);
     setSize(e.target.value);
+    setAvailable(product.sizes[e.target.value]);
   };
 
   const increase = () => {
-    setQuantity((count) => count + 1);
+    if (quantity < available) {
+      setQuantity((count) => count + 1);
+    }
   };
 
   const decrease = () => {
@@ -66,14 +71,15 @@ function Product() {
               type="button"
               disabled={value == 0 ? true : false}
               value={key}
-              onClick={handleSize}
+              onClick={handleClick}
             >
               {key}
             </button>
           ))}
       </ul>
-      <div className="counter">
+      <div>
         <div>{`Selected Size:${size}`}</div>
+        <div>{`Quantity Available:${available}`}</div>
         <span>{quantity}</span>
         <div>
           <button onClick={increase}>+</button>

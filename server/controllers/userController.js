@@ -12,6 +12,10 @@ user.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username }).exec();
 
+  const value = {
+    _id: user._id,
+  };
+
   if (user === null) {
     return res.status(401).json({ msg: "User not found" });
   }
@@ -35,7 +39,7 @@ user.post("/login", async (req, res) => {
   res.cookie("refresh", refreshToken, { httpOnly: true });
 
   // redirect to explore page
-  return res.status(200).send({ msg: "Login Success" });
+  return res.status(200).json(value);
 });
 
 user.post(

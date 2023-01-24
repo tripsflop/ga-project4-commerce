@@ -8,9 +8,15 @@ import NotFound from "../misc/NotFound";
 import Product from "../product/Product";
 import Register from "../routes/Register";
 import Cart from "../routes/Cart";
+import Order from "../routes/Order";
 import { Route, Routes } from "react-router-dom";
+import ProtectedRoute from "../routes/ProtectedRoute";
+import PublicRoute from "../routes/PublicRoute";
+import { useSelector } from "react-redux";
 
 function App() {
+  const user = useSelector((state) => state.user._id);
+
   return (
     <div className="App">
       <Routes>
@@ -19,9 +25,31 @@ function App() {
           <Route path="home" element={<Home />} />
           <Route path="explore" element={<Explore />} />
           <Route path="explore/:id" element={<Product />} />
-          <Route path="account" element={<Account />} />
-          <Route path="profile" element={<Profile />} />
+          <Route
+            path="account"
+            element={
+              <PublicRoute user={user}>
+                <Account />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="profile"
+            element={
+              <ProtectedRoute user={user}>
+                <Profile />
+              </ProtectedRoute>
+            }
+          />
           <Route path="register" element={<Register />} />
+          <Route
+            path="order"
+            element={
+              <ProtectedRoute user={user}>
+                <Order />
+              </ProtectedRoute>
+            }
+          />
           <Route path="cart" element={<Cart />} />
           <Route path="*" element={<NotFound />} />
         </Route>

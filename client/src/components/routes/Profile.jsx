@@ -1,10 +1,10 @@
 import React from "react";
 import useFetch from "../hooks/useFetch";
+import { useSelector } from "react-redux";
 
 function Profile() {
-  const { response, loading, error } = useFetch(
-    "/api/user/63c122801fee2534d953fd42"
-  );
+  const user = useSelector((state) => state.user);
+  const { response, loading, error } = useFetch(`/api/user/${user._id}`);
 
   return (
     <section>

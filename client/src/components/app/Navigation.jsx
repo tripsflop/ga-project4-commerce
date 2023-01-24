@@ -10,6 +10,7 @@ const Navigation = () => {
   });
 
   const quantity = useSelector((state) => state.cart.quantity);
+  const user = useSelector((state) => state.user._id);
 
   return (
     <React.Fragment>
@@ -20,11 +21,14 @@ const Navigation = () => {
         <NavLink style={style} to="/explore">
           Explore
         </NavLink>
-        <NavLink style={style} to="/account">
+        <NavLink style={style} hidden={user ? true : false} to="/account">
           Account
         </NavLink>
-        <NavLink style={style} to="/profile">
+        <NavLink style={style} hidden={user ? false : true} to="/profile">
           Profile
+        </NavLink>
+        <NavLink style={style} hidden={user ? false : true} to="/order">
+          Order
         </NavLink>
         <NavLink style={style} to="/cart">
           {`Cart(${quantity})`}

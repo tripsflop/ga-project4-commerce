@@ -4,6 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { addUserId } from "../../redux/user";
+import { useDispatch } from "react-redux";
 
 const schema = yup.object().shape({
   username: yup.string().min(8).max(32).required(),
@@ -13,6 +15,7 @@ const schema = yup.object().shape({
 function Account() {
   const [msg, setMsg] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -21,6 +24,10 @@ function Account() {
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  const handleDispatch = (_id) => {
+    dispatch(addUserId({ _id }));
+  };
 
   const onSubmit = async (data) => {
     setMsg("");
@@ -33,11 +40,14 @@ function Account() {
     })
       .then((response) => response.json())
       .then((data) => {
+        if (data._id) {
+          handleDispatch(data._id);
+          navigate("/explore");
+        }
         if (data.msg) {
           setMsg(data.msg);
         }
       });
-    // .then(navigate("/profile"));
   };
 
   return (

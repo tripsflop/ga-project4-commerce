@@ -38,6 +38,7 @@ function Cart() {
             style={{ width: "40%", height: "40%" }}
           />
           <div>{product.shoeName}</div>
+          <div>Size:{product.size}</div>
           <div>${product.retailPrice}</div>
           <div>Quantity:{product.quantity}</div>
         </div>
