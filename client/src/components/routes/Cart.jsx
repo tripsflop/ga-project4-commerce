@@ -6,8 +6,6 @@ function Cart() {
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
 
-  console.log(cart);
-
   const handleCheckout = () => {
     fetch("/api/checkout/create", {
       method: "POST",
