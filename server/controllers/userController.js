@@ -42,6 +42,10 @@ user.post("/login", async (req, res) => {
   return res.status(200).json(value);
 });
 
+user.post("/logout", async (req, res) => {
+  res.clearCookie("token").send();
+});
+
 user.post(
   "/register",
   body("name").isAlpha(["en-US"], { ignore: " _-" }),

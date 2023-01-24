@@ -17,12 +17,6 @@ const rootReducer = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-// export default configureStore({
-//   reducer: {
-//     cart: cartReducer,
-//     user: userReducer,
-//   },
-// });
 const store = configureStore({
   reducer: persistedReducer,
   middleware: [thunk],

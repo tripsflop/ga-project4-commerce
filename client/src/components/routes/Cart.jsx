@@ -1,8 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addProduct, removeProduct } from "../../redux/cart";
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
+  const dispatch = useDispatch();
+
+  console.log(cart);
 
   const handleCheckout = () => {
     fetch("/api/checkout/create", {
@@ -27,6 +31,24 @@ function Cart() {
       });
   };
 
+  const handleIncrease = (e) => {
+    let selectedItem = JSON.parse(
+      JSON.stringify(cart.products[e.target.value])
+    );
+    if (selectedItem.quantity < selectedItem.sizes[selectedItem.size]) {
+      selectedItem.quantity = 1;
+      dispatch(addProduct({ ...selectedItem }));
+    }
+  };
+
+  const handleDecrease = (e) => {
+    let selectedItem = JSON.parse(
+      JSON.stringify(cart.products[e.target.value])
+    );
+    selectedItem.quantity = 1;
+    dispatch(removeProduct({ ...selectedItem }));
+  };
+
   return (
     <section>
       <h1>Cart</h1>
@@ -41,6 +63,14 @@ function Cart() {
           <div>Size:{product.size}</div>
           <div>${product.retailPrice}</div>
           <div>Quantity:{product.quantity}</div>
+          <div>
+            <button value={index} onClick={handleIncrease}>
+              +
+            </button>
+            <button value={index} onClick={handleDecrease}>
+              -
+            </button>
+          </div>
         </div>
       ))}
       <div>Total:${cart.total}</div>

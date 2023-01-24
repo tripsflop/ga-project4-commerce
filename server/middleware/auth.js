@@ -21,7 +21,6 @@ const authorise = (role) => {
     } catch (err) {
       console.log(err);
       res.clearCookie("token");
-      //return res.redirect("/");
     }
   };
 };
