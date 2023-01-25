@@ -30,13 +30,13 @@ user.post("/login", async (req, res) => {
     { expiresIn: "1h" }
   );
 
-  const refreshToken = jwt.sign(
-    { id: user, role: role.User },
-    process.env.REFRESH_TOKEN_SECRET
-  );
+  // const refreshToken = jwt.sign(
+  //   { id: user, role: role.User },
+  //   process.env.REFRESH_TOKEN_SECRET
+  // );
 
   res.cookie("token", accessToken, { httpOnly: true });
-  res.cookie("refresh", refreshToken, { httpOnly: true });
+  // res.cookie("refresh", refreshToken, { httpOnly: true });
 
   // redirect to explore page
   return res.status(200).json(value);
@@ -52,7 +52,6 @@ user.post(
   body("email").isEmail(),
   body("password").isAlphanumeric().isLength({ min: 8 }),
   body("mobile").isMobilePhone(["en-SG", true]),
-  body("creditCard").isCreditCard(),
   body("username").custom(async (value) => {
     return await User.find({ username: value }).then((user) => {
       if (user.length) {
@@ -77,7 +76,6 @@ user.post(
     try {
       const data = req.body;
       data.password = bcrypt.hashSync(data.password, 10);
-      data.creditCard = bcrypt.hashSync(data.creditCard, 10);
       const newUser = await User.create(data);
       res.status(200).send();
     } catch (error) {

@@ -9,7 +9,6 @@ const userSchema = new mongoose.Schema({
   streetName: { type: String, required: true },
   unitNo: { type: String, required: true },
   postalCode: { type: String, required: true },
-  creditCard: { type: String, required: true },
 });
 
 const User = mongoose.model("user", userSchema);
