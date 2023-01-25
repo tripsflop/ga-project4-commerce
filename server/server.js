@@ -11,6 +11,7 @@ const { db } = require("./models/user.js");
 const userController = require("./controllers/userController.js");
 const adminController = require("./controllers/adminController.js");
 const productController = require("./controllers/productController.js");
+const orderController = require("./controllers/orderController.js");
 const checkoutController = require("./controllers/checkoutController.js");
 
 const app = express();
@@ -42,6 +43,7 @@ app.use(cookieParser());
 // routes
 app.use("/api/user", userController);
 app.use("/api/admin", adminController);
+app.use("/api/order", orderController);
 app.use("/api/product", productController);
 app.use("/api/checkout", checkoutController);
 
