@@ -153,11 +153,6 @@ function Register() {
         {errors.postalCode && <span>{errors.postalCode?.message}</span>}
         <br></br>
 
-        <label>Credit Card: </label>
-        <input type="text" {...register("creditCard", { required: true })} />
-        {errors.creditCard && <span>{errors.creditCard?.message}</span>}
-        <br></br>
-
         <input type="submit" />
       </form>
     </React.Fragment>
