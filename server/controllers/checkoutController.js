@@ -131,12 +131,15 @@ const createOrder = async (customer, data) => {
   console.log(Items);
   const newOrder = new Order({
     user: customer.metadata.userId,
+    paymentIntent: data.payment_intent,
     products: JSON.parse(customer.metadata.cart),
     subtotal: data.amount_subtotal,
     total: data.amount_total,
     payment: data.payment_method_types,
     paymentStatus: data.payment_status,
     shippingDetails: data.shipping_details.address,
+    isDeleted: false,
+    refundInitiated: false,
   });
 
   try {
@@ -199,6 +202,11 @@ checkout.post(
         break;
 
       case "payment_intent.created":
+        console.log(event.type);
+        console.log(data);
+        break;
+
+      case "charge.refunded":
         console.log(event.type);
         console.log(data);
         break;

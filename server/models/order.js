@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const orderSchema = new mongoose.Schema(
   {
     user: { type: mongoose.Schema.Types.ObjectId, ref: "user" },
+    paymentIntent: { type: String },
     products: [
       {
         item: { type: mongoose.Schema.Types.ObjectId, ref: "product" },
@@ -23,6 +24,8 @@ const orderSchema = new mongoose.Schema(
       state: String,
     },
     shippingStatus: { status: { type: String, default: "Pending" } },
+    isDeleted: { type: Boolean, defaults: false },
+    refundInitiated: { type: Boolean, defaults: false },
   },
   { timestamps: true }
 );
