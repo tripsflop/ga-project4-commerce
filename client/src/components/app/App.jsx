@@ -13,6 +13,8 @@ import { Route, Routes } from "react-router-dom";
 import ProtectedRoute from "../routes/ProtectedRoute";
 import PublicRoute from "../routes/PublicRoute";
 import { useSelector } from "react-redux";
+import AdminLogin from "../admin/AdminLogin";
+import Dashboard from "../admin/Dashboard";
 
 function App() {
   const user = useSelector((state) => state.user._id);
@@ -20,6 +22,9 @@ function App() {
   return (
     <div className="App">
       <Routes>
+        <Route path="/admin" element={<AdminLogin />}></Route>
+        <Route path="/dashboard" element={<Dashboard />}></Route>
+
         <Route element={<Navigation />}>
           <Route index element={<Home />} />
           <Route path="home" element={<Home />} />

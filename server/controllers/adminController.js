@@ -4,6 +4,7 @@ const { param, body, validationResult } = require("express-validator");
 const Admin = require("../models/Admin.js");
 const admin = express.Router();
 const role = require("../helper/roles.js");
+const jwt = require("jsonwebtoken");
 
 // admin login
 admin.post("/login", async (req, res) => {
@@ -24,7 +25,7 @@ admin.post("/login", async (req, res) => {
 
   const token = jwt.sign(
     { id: user, role: role.Admin },
-    process.env.JWT_SECRET,
+    process.env.JWT_TOKEN_SECRET,
     { expiresIn: "1h" }
   );
 
