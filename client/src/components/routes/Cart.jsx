@@ -4,6 +4,7 @@ import { addProduct, removeProduct } from "../../redux/cart";
 
 function Cart() {
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
 
   const handleCheckout = () => {
@@ -12,7 +13,7 @@ function Cart() {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(cart.products),
+      body: JSON.stringify({ cart: cart.products, user: user._id }),
     })
       .then((response) => {
         if (response.ok) {
