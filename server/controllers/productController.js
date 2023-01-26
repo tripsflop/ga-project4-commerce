@@ -15,7 +15,7 @@ product.get("/all", async (req, res) => {
 // filter by release date
 product.get("/latest", async (req, res) => {
   try {
-    const listings = await Product.find().sort({ releaseDate: -1 }).limit(5);
+    const listings = await Product.find().sort({ releaseDate: -1 }).limit(4);
     res.status(200).json(listings);
   } catch (error) {
     res.status(400).json({ error: error.message });
