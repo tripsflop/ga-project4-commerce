@@ -6,6 +6,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { addUserId } from "../../redux/user";
 import { useDispatch } from "react-redux";
+import Form from "react-bootstrap/Form";
+import "./admin.css";
 
 const schema = yup.object().shape({
   username: yup.string().min(5).max(32).required(),
@@ -51,38 +53,66 @@ function AdminLogin() {
   };
 
   return (
-    <section>
-      <h1>Admin Login</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          {...register("username")}
-          placeholder="username"
-          required
-          onChange={() => {
-            setMsg("");
-          }}
-        />
-        <br></br>
-        <span>{errors.username?.message}</span>
-        <br></br>
-        <input
-          type="password"
-          {...register("password")}
-          placeholder="password"
-          onChange={() => {
-            setMsg("");
-          }}
-          required
-        />
-        <br></br>
-        <span>{errors.password?.message}</span>
-        <br></br>
-        {msg.length > 0 && <span>{msg}</span>}
-        <br></br>
-        <input type="submit" value="Sign In" />
-      </form>
-    </section>
+    <div className="container-fluid ps-md-0">
+      <div className="row g-0">
+        <div className="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+        <div className="col-md-8 col-lg-6">
+          <div className="login d-flex align-items-center py-5">
+            <div className="container">
+              <div className="row">
+                <div className="col-md-9 col-lg-8 mx-auto">
+                  <h3 className="login-heading mb-4">Admin Login</h3>
+
+                  <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className="form-floating mb-3">
+                      <input
+                        className="form-control"
+                        id="floatingInput"
+                        type="text"
+                        {...register("username")}
+                        placeholder="Username"
+                        required
+                        onChange={() => {
+                          setMsg("");
+                        }}
+                      />
+                      <label htmlFor="floatingInput">Username</label>
+                    </div>
+                    <Form.Text>{errors.username?.message}</Form.Text>
+
+                    <div className="form-floating mb-3">
+                      <input
+                        type="password"
+                        className="form-control"
+                        id="floatingPassword"
+                        placeholder="Password"
+                        {...register("password")}
+                        onChange={() => {
+                          setMsg("");
+                        }}
+                        required
+                      />
+                      <label htmlFor="floatingPassword">Password</label>
+                    </div>
+                    <Form.Text>{errors.password?.message}</Form.Text>
+                    <Form.Text>{msg.length > 0 && msg}</Form.Text>
+
+                    <div className="d-grid">
+                      <button
+                        className="btn btn-lg btn-primary btn-login text-uppercase fw-bold mb-2"
+                        type="submit"
+                      >
+                        Sign in
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 

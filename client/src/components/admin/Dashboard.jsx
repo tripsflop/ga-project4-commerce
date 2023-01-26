@@ -1,10 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
   const [order, setOrder] = useState([]);
-
-  console.log(order);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEntries = async () => {
@@ -34,26 +34,85 @@ function Dashboard() {
       });
   };
 
+  const handleLogout = async () => {
+    const response = await fetch("/api/admin/logout", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then(localStorage.removeItem("persist:root"))
+      .then(navigate("/admin"));
+  };
+
+  console.log(order);
+  // console.log(order[0].products[0]._id);
+
   return (
     <div>
-      <h1>Dashboard</h1>
-      {order.map((product, index) => (
-        <div key={index}>
-          <div>Payment Intent: {product.paymentIntent}</div>
-          <div>Payment Status: {product.paymentStatus}</div>
-          <div>Shipping Status: {product.shippingStatus.status}</div>
-          <div>Total: ${product.total / 100}</div>
-          <div>User: {product.user}</div>
-          <button
-            id={product._id}
-            disabled={product.paymentStatus === "Refunded" ? true : false}
-            type="button"
-            onClick={handleRefund}
-          >
-            {product.paymentStatus === "Refunded" ? "Refunded" : "Refund User"}
-          </button>
-        </div>
-      ))}
+      <table className="table align-middle mb-0 bg-white">
+        <thead className="bg-light">
+          <tr>
+            <th>User</th>
+            <th>Payment Intent</th>
+            <th>Shipping Status</th>
+            <th>Total</th>
+            <th>Payment Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          {order.map((product, index) => (
+            <tr key={index}>
+              <td>
+                <div className="d-flex align-items-center">
+                  <div className="ms-3">
+                    <p className="fw-bold mb-1">{product.user.username}</p>
+                    <p className="text-muted mb-0">{product.user._id}</p>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <p className="fw-normal mb-1">Stripe</p>
+                <p className="text-muted mb-0">{product.paymentIntent}</p>
+              </td>
+              <td>
+                <span
+                  className={
+                    product.shippingStatus.status === "Returned"
+                      ? "badge rounded-pill bg-success"
+                      : "badge rounded-pill bg-warning text-dark"
+                  }
+                >
+                  {product.shippingStatus.status}
+                </span>
+              </td>
+              <td>${product.total / 100}</td>
+              <td>
+                <button
+                  type="button"
+                  className={
+                    product.paymentStatus === "Refunded"
+                      ? "badge bg-secondary rounded-pill text-dark"
+                      : "badge bg-primary rounded-pill text-dark"
+                  }
+                  data-mdb-ripple-color="dark"
+                  id={product._id}
+                  disabled={product.paymentStatus === "Refunded" ? true : false}
+                  onClick={handleRefund}
+                >
+                  {product.paymentStatus === "Refunded"
+                    ? "Refunded"
+                    : "Refund User"}
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <button type="button" onClick={handleLogout}>
+        Logout
+      </button>
     </div>
   );
 }

@@ -11,13 +11,13 @@ admin.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await Admin.findOne({ username }).exec();
 
-  const value = {
-    _id: user._id,
-  };
-
   if (user === null) {
     return res.status(401).json({ msg: "Admin not found" });
   }
+
+  const value = {
+    _id: user._id,
+  };
 
   if (!bcrypt.compareSync(password, user.password)) {
     return res.status(401).json({ msg: "Invalid password" });
@@ -31,8 +31,11 @@ admin.post("/login", async (req, res) => {
 
   res.cookie("token", token, { httpOnly: true });
 
-  // redirect to explore page
   return res.status(200).json(value);
+});
+
+admin.post("/logout", async (req, res) => {
+  res.clearCookie("token").send();
 });
 
 admin.post(

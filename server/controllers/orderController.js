@@ -5,7 +5,13 @@ const order = express.Router();
 
 order.get("/initiate", async (req, res) => {
   try {
-    const orders = await Order.find({ refundInitiated: true }).exec();
+    const orders = await Order.find({ refundInitiated: true })
+      .populate("user")
+      .populate({
+        path: "products",
+        populate: { path: "_id", model: "product" },
+      })
+      .exec();
     res.status(200).json(orders);
   } catch (error) {
     res.status(400).json({ error: error.message });
