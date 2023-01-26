@@ -2,18 +2,70 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Pagination from "react-bootstrap/Pagination";
+import axios from "axios";
 
 function Explore() {
   const [items, setItems] = useState([]);
+  const [active, setActive] = useState(1);
+  const [numItems, setNumItems] = useState("");
+  const numItemsPerPage = 15;
+  let pages = [];
+
+  // useEffect(() => {
+  //   const fetchEntries = async () => {
+  //     await fetch("/api/product/all")
+  //       .then((response) => response.json())
+  //       .then((data) => setItems(data));
+  //   };
+  //   fetchEntries();
+  // }, []);
 
   useEffect(() => {
     const fetchEntries = async () => {
-      await fetch("/api/product/all")
+      await fetch(`/api/product/count`)
         .then((response) => response.json())
-        .then((data) => setItems(data));
+        .then((data) => {
+          setNumItems(data);
+          // setIndex(Array.from({ length: data }, (_, i) => i + 1));
+        });
     };
     fetchEntries();
   }, []);
+
+  for (
+    let number = 1;
+    number <= Math.ceil(numItems / numItemsPerPage);
+    number++
+  ) {
+    pages.push(
+      <Pagination.Item
+        key={number}
+        active={number === active}
+        onClick={() => pagination(number)}
+      >
+        {number}
+      </Pagination.Item>
+    );
+  }
+
+  useEffect(() => {
+    if (active === 1) {
+      axios
+        .get(`/api/product/item?page=${1}&limit=${numItemsPerPage}`)
+        .then((data) => {
+          setItems(data.data);
+        });
+    }
+  }, [active]);
+
+  function pagination(number) {
+    setActive(number);
+    axios
+      .get(`/api/product/item?page=${number}&limit=${numItemsPerPage}`)
+      .then((data) => {
+        setItems(data.data);
+      });
+  }
 
   return (
     <section>
@@ -42,23 +94,25 @@ function Explore() {
             </div>
           ))}
         </div>
-        <Pagination className="justify-content-center">
-          <Pagination.First />
-          <Pagination.Prev />
-          <Pagination.Item>{1}</Pagination.Item>
-          <Pagination.Ellipsis />
-
-          <Pagination.Item>{10}</Pagination.Item>
-          <Pagination.Item>{11}</Pagination.Item>
-          <Pagination.Item active>{12}</Pagination.Item>
-          <Pagination.Item>{13}</Pagination.Item>
-          <Pagination.Item disabled>{14}</Pagination.Item>
-
-          <Pagination.Ellipsis />
-          <Pagination.Item>{20}</Pagination.Item>
-          <Pagination.Next />
-          <Pagination.Last />
-        </Pagination>
+        <div className="container d-flex justify-content-center">
+          <Pagination size="sm">
+            <Pagination.Prev
+              onClick={() => {
+                if (active > 1) {
+                  pagination(active - 1);
+                }
+              }}
+            />
+            {pages}
+            <Pagination.Next
+              onClick={() => {
+                if (active < Math.ceil(numItems / numItemsPerPage)) {
+                  pagination(active + 1);
+                }
+              }}
+            />
+          </Pagination>
+        </div>
       </div>
     </section>
   );

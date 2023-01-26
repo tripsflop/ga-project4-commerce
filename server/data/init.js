@@ -163,7 +163,7 @@ function insertDB() {
 
 insertDB();
 
-//getSneakers(saveData, "Nike", 10);
+//getSneakers(saveData, "Nike Dunk", 50);
 
 // for (brand of brands) {
 //   getSneakers(saveData, brand, count);
