@@ -7,9 +7,7 @@ function History() {
         <div className="row gy-lg-5 align-items-center">
           <div className="col-lg-6 order-lg-1 text-center text-lg-start">
             <div className="title pt-3 pb-5">
-              <h2 className="position-relative d-inline-block ms-4">
-                Our History
-              </h2>
+              <h2 className="position-relative d-inline-block">Our History</h2>
             </div>
             <p className="lead text-muted">
               From humble beginnings as a small shop,
