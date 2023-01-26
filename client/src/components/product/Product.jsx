@@ -45,48 +45,71 @@ function Product() {
   };
 
   return (
-    <div key={product._id}>
-      <Link to="/explore">Back to Explore</Link>
-      <img
-        src={product.thumbnail}
-        alt={product.urlKey}
-        style={{ width: "40%", height: "40%" }}
-      />
-      <h2>{product.brand}</h2>
-      <h4>{product.shoeName}</h4>
-      <h4>${product.retailPrice}</h4>
-      <h4>{product.description}</h4>
-      <button
-        type="button"
-        disabled={!size && quantity}
-        onClick={handleDispatch}
-      >
-        Add to cart
-      </button>
-      <ul>
-        {product.sizes &&
-          Object.entries(product.sizes).map(([key, value]) => (
-            <button
-              key={key}
-              type="button"
-              disabled={value == 0 ? true : false}
-              value={key}
-              onClick={handleClick}
-            >
-              {key}
-            </button>
-          ))}
-      </ul>
-      <div>
-        <div>{`Selected Size:${size}`}</div>
-        <div>{`Quantity Available:${available}`}</div>
-        <span>{quantity}</span>
-        <div>
-          <button onClick={increase}>+</button>
-          <button onClick={decrease}>-</button>
+    <section key={product._id} className="py-5">
+      <div className="container px-4 px-lg-5 my-5">
+        <Link to="/explore">
+          <button className="btn btn-info">Back to Explore</button>
+        </Link>
+        <div className="row gx-4 gx-lg-5 align-items-center">
+          <div className="col-md-6 d-flex justify-content-center">
+            <img
+              className="card-img-top mb-5 mb-md-0"
+              src={product.thumbnail}
+              alt={product.urlKey}
+            />
+          </div>
+
+          <div className="col-md-6">
+            <div className="small mb-1">{product.brand}</div>
+            <h1 className="display-5 fw-bolder">{product.shoeName}</h1>
+            <div className="fs-5 mb-5">
+              <div>${product.retailPrice}</div>
+              <h6 className="mt-2">{size && `${available} Pairs Available`}</h6>
+            </div>
+            <div>
+              {product.sizes &&
+                Object.entries(product.sizes).map(([key, value]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    disabled={value == 0 ? true : false}
+                    value={key}
+                    className="mx-1 my-1 px-2 py-2 btn btn-outline-dark btn-fixed-width"
+                    onClick={handleClick}
+                  >
+                    {key}
+                  </button>
+                ))}
+            </div>
+            <p className="text-muted mt-3">{product.description}</p>
+            <div className="d-flex">
+              {/* <div className="fs-5 mr-3">
+                <h5>{size && `Size:${size}`}</h5>
+              </div> */}
+              <div className="fs-5 mx-3">
+                <button className="btn btn-outline-dark" onClick={increase}>
+                  +
+                </button>
+                <span className="mx-3 my-3">{quantity}</span>
+                <button className="btn btn-outline-dark" onClick={decrease}>
+                  -
+                </button>
+              </div>
+              <div className="justify-content-right">
+                <button
+                  className="btn btn-dark"
+                  type="button"
+                  disabled={!size && quantity}
+                  onClick={handleDispatch}
+                >
+                  Add to cart
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

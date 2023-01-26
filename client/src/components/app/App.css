@@ -68,6 +68,11 @@ input[type="number"] {
   appearance: textfield;
 }
 
+/* button */
+.btn-fixed-width {
+  width: 75px !important;
+}
+
 /* registration */
 @media only screen and (min-width: 700px) {
   .center {
