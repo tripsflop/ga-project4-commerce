@@ -22,11 +22,7 @@ function History() {
             </p>
           </div>
           <div className="col-lg-6 order-lg-0">
-            <img
-              src="../public/lot-1_air-ship_nike-1984_v4-copy.webp"
-              alt=""
-              className="img-fluid"
-            />
+            <img src="../public/nike-1984.webp" alt="" className="img-fluid" />
           </div>
         </div>
       </div>
