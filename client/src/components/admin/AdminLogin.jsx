@@ -68,7 +68,6 @@ function AdminLogin() {
                     <div className="form-floating mb-3">
                       <input
                         className="form-control"
-                        id="floatingInput"
                         type="text"
                         {...register("username")}
                         placeholder="Username"
@@ -85,7 +84,6 @@ function AdminLogin() {
                       <input
                         type="password"
                         className="form-control"
-                        id="floatingPassword"
                         placeholder="Password"
                         {...register("password")}
                         onChange={() => {

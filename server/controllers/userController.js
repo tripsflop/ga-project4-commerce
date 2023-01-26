@@ -12,10 +12,6 @@ user.post("/login", async (req, res) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username }).exec();
 
-  const value = {
-    _id: user._id,
-  };
-
   if (user === null) {
     return res.status(401).json({ msg: "User not found" });
   }
@@ -23,6 +19,10 @@ user.post("/login", async (req, res) => {
   if (!bcrypt.compareSync(password, user.password)) {
     return res.status(401).json({ msg: "Invalid password" });
   }
+
+  const value = {
+    _id: user._id,
+  };
 
   const accessToken = jwt.sign(
     { id: user, role: role.User },

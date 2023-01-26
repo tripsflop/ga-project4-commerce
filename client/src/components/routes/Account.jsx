@@ -1,11 +1,12 @@
 import React from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Form, Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { addUserId } from "../../redux/user";
 import { useDispatch } from "react-redux";
+import BForm from "react-bootstrap/Form";
 
 const schema = yup.object().shape({
   username: yup.string().min(8).max(32).required(),
@@ -51,39 +52,77 @@ function Account() {
   };
 
   return (
-    <section>
-      <h1>Have an account?</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="text"
-          {...register("username")}
-          placeholder="username"
-          required
-          onChange={() => {
-            setMsg("");
-          }}
-        />
-        <br></br>
-        <span>{errors.username?.message}</span>
-        <br></br>
-        <input
-          type="password"
-          {...register("password")}
-          placeholder="password"
-          onChange={() => {
-            setMsg("");
-          }}
-          required
-        />
-        <br></br>
-        <span>{errors.password?.message}</span>
-        <br></br>
-        {msg.length > 0 && <span>{msg}</span>}
-        <br></br>
-        <input type="submit" value="Sign In" />
-      </form>
-      <h3>Register Here!</h3>
-      <Link to="/register">Create an Account</Link>
+    <section className="vh-100 pt-5">
+      <div className="container py-5 h-100">
+        <div className="row d-flex justify-content-center align-items-center h-100">
+          <div className="col col-xl-10">
+            <div className="card" style={{ borderRadius: "1rem" }}>
+              <div className="row g-0">
+                <div className="col-md-6 col-lg-5 d-none d-md-block">
+                  <img
+                    src="/yeezy-unsplash-connor-houtman.jpg"
+                    alt="login form"
+                    className="img-fluid"
+                    style={{ borderRadius: "1rem" }}
+                  />
+                </div>
+                <div className="col-md-6 col-lg-7 d-flex align-items-center">
+                  <div className="card-body p-4 p-lg-5 text-black">
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                      <h4 className="fw-bold mb-2 pb-3">Have an account?</h4>
+
+                      <div className="form-floating mb-3">
+                        <input
+                          type="text"
+                          {...register("username")}
+                          placeholder="username"
+                          className="form-control"
+                          required
+                          onChange={() => {
+                            setMsg("");
+                          }}
+                        />
+                        <label htmlFor="floatingInput">Username</label>
+                      </div>
+                      <BForm.Text>{errors.username?.message}</BForm.Text>
+
+                      <div className="form-floating mb-3">
+                        <input
+                          type="password"
+                          {...register("password")}
+                          placeholder="password"
+                          className="form-control"
+                          onChange={() => {
+                            setMsg("");
+                          }}
+                          required
+                        />
+                        <label htmlFor="floatingPassword">Password</label>
+                      </div>
+                      <BForm.Text>{errors.password?.message}</BForm.Text>
+                      {msg.length > 0 && <BForm.Text>{msg}</BForm.Text>}
+
+                      <div className="pt-1 mb-4">
+                        <button
+                          className="btn btn-dark btn-lg btn-block"
+                          type="submit"
+                        >
+                          Login
+                        </button>
+                      </div>
+
+                      <p className="mb-5 pb-lg-2">
+                        Don't have an account?{" "}
+                        <Link to="/register">Register Here!</Link>
+                      </p>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

@@ -22,8 +22,7 @@ a:link {
 
 /*header*/
 #header {
-  background: url(../public/nike-unsplash-nelson-ndongala.jpg) top/cover
-    no-repeat;
+  background: url(/nike-unsplash-nelson-ndongala.jpg) top/cover no-repeat;
 }
 
 /*newsletter*/
