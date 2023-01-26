@@ -67,3 +67,11 @@ input[type="number"] {
   -moz-appearance: textfield;
   appearance: textfield;
 }
+
+/* registration */
+@media only screen and (min-width: 700px) {
+  .center {
+    margin: auto;
+    width: 50%;
+  }
+}

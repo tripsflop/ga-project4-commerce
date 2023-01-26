@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { addUserId } from "../../redux/user";
 import { useDispatch } from "react-redux";
-import BForm from "react-bootstrap/Form";
+import BootStrapForm from "react-bootstrap/Form";
 
 const schema = yup.object().shape({
   username: yup.string().min(8).max(32).required(),
@@ -70,7 +70,6 @@ function Account() {
                   <div className="card-body p-4 p-lg-5 text-black">
                     <form onSubmit={handleSubmit(onSubmit)}>
                       <h4 className="fw-bold mb-2 pb-3">Have an account?</h4>
-
                       <div className="form-floating mb-3">
                         <input
                           type="text"
@@ -84,7 +83,9 @@ function Account() {
                         />
                         <label htmlFor="floatingInput">Username</label>
                       </div>
-                      <BForm.Text>{errors.username?.message}</BForm.Text>
+                      <BootStrapForm.Text>
+                        {errors.username?.message}
+                      </BootStrapForm.Text>
 
                       <div className="form-floating mb-3">
                         <input
@@ -99,8 +100,12 @@ function Account() {
                         />
                         <label htmlFor="floatingPassword">Password</label>
                       </div>
-                      <BForm.Text>{errors.password?.message}</BForm.Text>
-                      {msg.length > 0 && <BForm.Text>{msg}</BForm.Text>}
+                      <BootStrapForm.Text>
+                        {errors.password?.message}
+                      </BootStrapForm.Text>
+                      {msg.length > 0 && (
+                        <BootStrapForm.Text>{msg}</BootStrapForm.Text>
+                      )}
 
                       <div className="pt-1 mb-4">
                         <button

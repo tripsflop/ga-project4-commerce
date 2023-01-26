@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import axios from "axios";
+import BootStrapForm from "react-bootstrap/Form";
 
 const schema = yup.object().shape({
   username: yup
@@ -104,58 +105,147 @@ function Register() {
   };
 
   return (
-    <React.Fragment>
-      <h1>Let's get started!</h1>
+    <section className="vh-100 pt-5 center">
+      <div className="container py-5 h-100">
+        <div className="card-body p-4 p-lg-5 text-black">
+          <h2 className="fw-bold mb-2 pb-3">Let's get started!</h2>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                placeholder="Username"
+                {...register("username", { required: true })}
+                className="form-control"
+              />
+              <label htmlFor="floatingInput">Username</label>
+            </div>
+            {errors.username && (
+              <BootStrapForm.Text>
+                {errors.username?.message}
+              </BootStrapForm.Text>
+            )}
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label>Username: </label>
-        <input type="text" {...register("username", { required: true })} />
-        {errors.username && <span>{errors.username?.message}</span>}
-        <br></br>
+            <div className="form-floating mb-3">
+              <input
+                type="password"
+                placeholder="Password"
+                className="form-control"
+                {...register("password", { required: true })}
+              />
+              <label htmlFor="floatingPassword">Password</label>
+            </div>
+            {errors.password && (
+              <BootStrapForm.Text>
+                {errors.password?.message}
+              </BootStrapForm.Text>
+            )}
 
-        <label>Password: </label>
-        <input type="password" {...register("password", { required: true })} />
-        {errors.password && <span>{errors.password?.message}</span>}
-        <br></br>
+            <div className="form-floating mb-3">
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                className="form-control"
+                {...register("cpassword", { required: true })}
+              />
+              <label htmlFor="floatingPassword">Confirm Password</label>
+            </div>
+            {errors.cpassword && (
+              <BootStrapForm.Text>
+                {errors.cpassword?.message}
+              </BootStrapForm.Text>
+            )}
 
-        <label>Confirm Password: </label>
-        <input type="password" {...register("cpassword", { required: true })} />
-        {errors.cpassword && <span>{errors.cpassword?.message}</span>}
-        <br></br>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                placeholder="Name"
+                className="form-control"
+                {...register("name", { required: true })}
+              />
+              <label htmlFor="floatingInput">Name</label>
+            </div>
+            {errors.name && (
+              <BootStrapForm.Text>{errors.name?.message}</BootStrapForm.Text>
+            )}
 
-        <label>Name: </label>
-        <input type="text" {...register("name", { required: true })} />
-        {errors.name && <span>{errors.name?.message}</span>}
-        <br></br>
+            <div className="form-floating mb-3">
+              <input
+                type="number"
+                placeholder="Mobile"
+                className="form-control"
+                {...register("mobile", { required: true })}
+              />
+              <label htmlFor="floatingInput">Mobile</label>
+            </div>
+            {errors.mobile && (
+              <BootStrapForm.Text>{errors.mobile?.message}</BootStrapForm.Text>
+            )}
 
-        <label>Mobile: </label>
-        <input type="number" {...register("mobile", { required: true })} />
-        {errors.mobile && <span>{errors.mobile?.message}</span>}
-        <br></br>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                placeholder="Email"
+                className="form-control"
+                {...register("email", { required: true })}
+              />
+              <label htmlFor="floatingInput">Email</label>
+            </div>
+            {errors.email && (
+              <BootStrapForm.Text>{errors.email?.message}</BootStrapForm.Text>
+            )}
 
-        <label>Email: </label>
-        <input type="text" {...register("email", { required: true })} />
-        {errors.email && <span>{errors.email?.message}</span>}
-        <br></br>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                placeholder="Street Name"
+                className="form-control"
+                {...register("streetName", { required: true })}
+              />
+              <label htmlFor="floatingInput">Street Name</label>
+            </div>
+            {errors.streetName && (
+              <BootStrapForm.Text>
+                {errors.streetName?.message}
+              </BootStrapForm.Text>
+            )}
 
-        <label>Street Name: </label>
-        <input type="text" {...register("streetName", { required: true })} />
-        {errors.streetName && <span>{errors.streetName?.message}</span>}
-        <br></br>
+            <div className="form-floating mb-3">
+              <input
+                type="text"
+                placeholder="Unit No"
+                className="form-control"
+                {...register("unitNo", { required: true })}
+              />
+              <label htmlFor="floatingInput">Unit No</label>
+            </div>
+            {errors.unitNo && (
+              <BootStrapForm.Text>{errors.unitNo?.message}</BootStrapForm.Text>
+            )}
 
-        <label>Unit No: </label>
-        <input type="text" {...register("unitNo", { required: true })} />
-        {errors.unitNo && <span>{errors.unitNo?.message}</span>}
-        <br></br>
+            <div className="form-floating mb-3">
+              <input
+                type="number"
+                placeholder="Postal Code"
+                className="form-control"
+                {...register("postalCode", { required: true })}
+              />
+              <label htmlFor="floatingInput">Postal Code</label>
+            </div>
+            {errors.postalCode && (
+              <BootStrapForm.Text>
+                {errors.postalCode?.message}
+              </BootStrapForm.Text>
+            )}
 
-        <label>Postal Code: </label>
-        <input type="number" {...register("postalCode", { required: true })} />
-        {errors.postalCode && <span>{errors.postalCode?.message}</span>}
-        <br></br>
-
-        <input type="submit" />
-      </form>
-    </React.Fragment>
+            <div className="pt-1 mb-4">
+              <button className="btn btn-dark btn-lg btn-block" type="submit">
+                Submit
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
   );
 }
 export default Register;
