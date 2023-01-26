@@ -50,6 +50,8 @@ function Profile() {
                   </div>
                   <div class="col-md-8">
                     <div class="card-body p-4">
+                      {loading && <p>Loading...</p>}
+                      {error && <p>Something went wrong...</p>}
                       <h6>Profile Information</h6>
                       <hr class="mt-0 mb-4" />
                       <div class="row pt-1">
@@ -90,8 +92,6 @@ function Profile() {
           </div>
         </div>
       </section>
-      {loading && <p>Loading...</p>}
-      {error && <p>Something went wrong...</p>}
     </section>
   );
 }
