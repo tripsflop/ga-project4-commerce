@@ -8,6 +8,7 @@ import { addUserId } from "../../redux/user";
 import { useDispatch } from "react-redux";
 import Form from "react-bootstrap/Form";
 import "./admin.css";
+import Role from "../helper/roles.js";
 
 const schema = yup.object().shape({
   username: yup.string().min(5).max(32).required(),
@@ -28,7 +29,7 @@ function AdminLogin() {
   });
 
   const handleDispatch = (_id) => {
-    dispatch(addUserId({ _id }));
+    dispatch(addUserId({ _id: _id, role: Role.Admin }));
   };
 
   const onSubmit = async (data) => {

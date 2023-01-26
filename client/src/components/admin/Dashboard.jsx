@@ -29,8 +29,8 @@ function Dashboard() {
           return response.json().then((json) => Promise.reject(json));
         }
       })
-      .catch((e) => {
-        console.error(e.error);
+      .catch((err) => {
+        console.error(err);
       });
   };
 
@@ -41,13 +41,15 @@ function Dashboard() {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
+      .then((response) => {
+        return response.text();
+      })
       .then(localStorage.removeItem("persist:root"))
-      .then(navigate("/admin"));
+      .then(navigate("/admin"))
+      .catch((e) => {
+        console.error(e.error);
+      });
   };
-
-  console.log(order);
-  // console.log(order[0].products[0]._id);
 
   return (
     <div>

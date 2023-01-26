@@ -15,17 +15,26 @@ import PublicRoute from "../routes/PublicRoute";
 import { useSelector } from "react-redux";
 import AdminLogin from "../admin/AdminLogin";
 import Dashboard from "../admin/Dashboard";
+import AdminRoute from "../admin/AdminRoute";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 
 function App() {
   const user = useSelector((state) => state.user._id);
+  const role = useSelector((state) => state.user.role);
 
   return (
     <div className="app">
       <Routes>
         <Route path="/admin" element={<AdminLogin />}></Route>
-        <Route path="/dashboard" element={<Dashboard />}></Route>
+        <Route
+          path="/dashboard"
+          element={
+            <AdminRoute user={user} role={role}>
+              <Dashboard />
+            </AdminRoute>
+          }
+        ></Route>
 
         <Route element={<Navigation />}>
           <Route index element={<Home />} />
