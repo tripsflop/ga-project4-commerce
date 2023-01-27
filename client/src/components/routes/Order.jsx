@@ -108,6 +108,7 @@ function Order() {
                   hidden={
                     product.isDeleted ||
                     product.shippingStatus.status == "Completed" ||
+                    product.shippingStatus.status == "Returned" ||
                     product.paymentStatus == "Refund Initiated"
                       ? true
                       : false
