@@ -54,61 +54,88 @@ function Order() {
   };
 
   return (
-    <section>
-      <h1>Order</h1>
-      {order.map((product, index) => (
-        <div key={index}>
-          <div>Payment Method: {product.payment[0].toUpperCase()}</div>
-          <div>Payment Status: {product.paymentStatus.toUpperCase()}</div>
-          <div>
-            Order Created: {new Date(product.createdAt).toLocaleDateString()}
-          </div>
-          <div>Shipping Status: {product.shippingStatus.status}</div>
-          <div>
-            <div>Address Line 1: {product.shippingDetails.line1}</div>
-            <div>
-              Address Line 2:{" "}
-              {product.shippingDetails.line2 == null
-                ? "nil"
-                : product.shippingDetails.line2}
-            </div>
-            <div>Postal Code: {product.shippingDetails.postal_code}</div>
-          </div>
-          <div>Total: ${product.total / 100}</div>
-          <button
-            id={product._id}
-            type="button"
-            onClick={handleCancel}
-            hidden={
-              product.isDeleted ||
-              product.shippingStatus.status == "Completed" ||
-              product.paymentStatus == "Refund Initiated"
-                ? true
-                : false
-            }
-          >
-            Cancel Order
-          </button>
+    <div className="container mt-5 pt-5">
+      <table className="table align-middle mb-0 bg-white">
+        <thead className="bg-light">
+          <tr>
+            <th>Payment Method</th>
+            <th>Payment Status</th>
+            <th>Order Created</th>
+            <th>Shipping Status</th>
+            <th>Address Line 1</th>
+            <th>Address Line 2</th>
+            <th>Postal Code</th>
+            <th>Total</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {order.map((product, index) => (
+            <tr key={index}>
+              <td>
+                <div>{product.payment[0].toUpperCase()}</div>
+              </td>
+              <td>
+                <div>{product.paymentStatus.toUpperCase()}</div>
+              </td>
+              <td>
+                <div>{new Date(product.createdAt).toLocaleDateString()}</div>
+              </td>
+              <td>
+                <div>{product.shippingStatus.status}</div>
+              </td>
+              <td>
+                <div>{product.shippingDetails.line1}</div>
+              </td>
+              <td>
+                <div>
+                  {product.shippingDetails.line2 == null
+                    ? "nil"
+                    : product.shippingDetails.line2}
+                </div>
+              </td>
+              <td>
+                <div>{product.shippingDetails.postal_code}</div>
+              </td>
+              <td>
+                <div>${product.total / 100}</div>
+              </td>
+              <td>
+                <button
+                  id={product._id}
+                  type="button"
+                  onClick={handleCancel}
+                  hidden={
+                    product.isDeleted ||
+                    product.shippingStatus.status == "Completed" ||
+                    product.paymentStatus == "Refund Initiated"
+                      ? true
+                      : false
+                  }
+                >
+                  Cancel Order
+                </button>
 
-          <button
-            id={product._id}
-            type="button"
-            onClick={handleRefund}
-            hidden={
-              product.isDeleted ||
-              product.shippingStatus.status !== "Completed" ||
-              product.paymentStatus == "Refund Initiated"
-                ? true
-                : false
-            }
-          >
-            Initiate Refund
-          </button>
-
-          <br></br>
-        </div>
-      ))}
-    </section>
+                <button
+                  id={product._id}
+                  type="button"
+                  onClick={handleRefund}
+                  hidden={
+                    product.isDeleted ||
+                    product.shippingStatus.status !== "Completed" ||
+                    product.paymentStatus == "Refund Initiated"
+                      ? true
+                      : false
+                  }
+                >
+                  Initiate Refund
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
