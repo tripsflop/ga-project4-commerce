@@ -52,7 +52,7 @@ function Dashboard() {
   };
 
   return (
-    <div>
+    <div className="container">
       <table className="table align-middle mb-0 bg-white">
         <thead className="bg-light">
           <tr>
