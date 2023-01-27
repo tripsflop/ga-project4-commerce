@@ -40,9 +40,9 @@ function Profile() {
                     {response && (
                       <p className="text-muted">{response.username}</p>
                     )}
-                    <div classNameName="mx-1 my-2">
+                    <div className="mx-1 my-2">
                       <button
-                        classNameName="btn btn-dark btn-sm btn-block"
+                        className="btn btn-dark btn-sm btn-block"
                         type="button"
                         onClick={handleLogout}
                       >
